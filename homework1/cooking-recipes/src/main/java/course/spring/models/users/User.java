@@ -37,7 +37,7 @@ public class User implements UserDetails {
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NonNull
-    @Pattern(regexp = "^(?=.*\\d)(?=.*\\W)[\\w\\W]{8,}$", message = "Invalid password - must contains at least one digit and at least one non-digit and non-letter")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*\\W)[\\w\\W]{8,}$", message = "Invalid password - must contains at least one digit and at least one non-digit and non-letter and must be minimum 8 length")
     private String password;
     @NonNull
     @NotNull
@@ -55,7 +55,6 @@ public class User implements UserDetails {
     private LocalDateTime createdAt = LocalDateTime.now();
     @PastOrPresent
     private LocalDateTime updatedAt = LocalDateTime.now();
-    private boolean active = true;
 
     public User(@NonNull @NotNull String name,
                 @NonNull @NotNull @Size(max = 15) String username,
@@ -91,25 +90,26 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return active;
+
+        return status.equals(AccountStatus.ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return active;
+        return status.equals(AccountStatus.ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return active;
+        return status.equals(AccountStatus.ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return active;
+        return status.equals(AccountStatus.ACTIVE);
     }
 
     public static String getFemalePictureURL() {
