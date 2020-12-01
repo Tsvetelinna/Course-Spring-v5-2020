@@ -50,6 +50,7 @@ public class UserAuthenticationController {
 
     @PostMapping("/api/register")
     public User register(@Valid @RequestBody User user, Errors errors){
+        user.setRole(Role.USER);
         if(errors.hasErrors()){
             throw new InvalidEntityDataException("Invalid user data",  getViolationsAsStringList(errors));
         }

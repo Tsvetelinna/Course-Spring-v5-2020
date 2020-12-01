@@ -1,6 +1,7 @@
 package course.spring.web;
 
 import course.spring.exceptions.InvalidEntityDataException;
+import course.spring.models.users.Role;
 import course.spring.models.users.User;
 import course.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

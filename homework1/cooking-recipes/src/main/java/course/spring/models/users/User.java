@@ -43,8 +43,8 @@ public class User implements UserDetails {
     @NotNull
     private Gender gender;
     @NonNull
-    @NotNull
     private Role role;
+    @NonNull
     @URL
     private String profilePictureUrl;
     @Size(max=512)

@@ -26,6 +26,7 @@ public class RecipeResource {
         this.recipeService = recipeService;
     }
 
+    @GetMapping("")
     public List<Recipe> getAllRecipes() {
         return recipeService.getAllRecipes();
     }

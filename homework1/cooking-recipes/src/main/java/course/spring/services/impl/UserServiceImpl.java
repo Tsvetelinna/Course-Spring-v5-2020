@@ -4,8 +4,8 @@ import course.spring.dao.UserRepository;
 import course.spring.exceptions.AlreadyExistingEntityException;
 import course.spring.exceptions.InvalidEntityDataException;
 import course.spring.exceptions.NonExistingEntityException;
-import course.spring.models.users.AccountStatus;
 import course.spring.models.users.Gender;
+import course.spring.models.users.Role;
 import course.spring.models.users.User;
 import course.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +59,10 @@ public class UserServiceImpl implements UserService {
                 user.setProfilePictureUrl(User.getMalePictureURL());
             }
         }
+
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
+        }
         user.setId(null);
         user.setStatus(ACTIVE);
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -69,9 +73,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         User userById = getUserById(user.getId());
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
+        }
         if (user.getStatus() == null) {
             user.setStatus(userById.getStatus());
         }
+        user.setRole(Role.USER);
         user.setPassword(userById.getPassword());
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
